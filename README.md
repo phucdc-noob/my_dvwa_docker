@@ -18,3 +18,4 @@ just a shitty docker, nvm
   ```bash
   docker-compose up
   ```
+- Default credential: `admin`:`password`
