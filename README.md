@@ -3,7 +3,7 @@ just a shitty docker, nvm
 
 ## How to use?
 
-- Install [docker engine](https://docs.docker.com/engine/install/) and [docker-compose](https://docs.docker.com/compose/install/) on your machine
+- Install **latest** [docker engine](https://docs.docker.com/engine/install/) and [docker-compose](https://docs.docker.com/compose/install/) on your machine
 - Clone this repo:
   ```bash
   git clone https://github.com/phucdc-noob/my_dvwa_docker.git dvwa_docker
