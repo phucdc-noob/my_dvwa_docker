@@ -53,6 +53,7 @@ dvwa() {
     grant all on dvwa.* to dvwa@localhost;
     flush privileges;
 _EOF_
+  rm -rf /var/www/html/*
   git clone https://github.com/digininja/DVWA.git /var/www/html
   mv /var/www/html/config/config.inc.php.dist /var/www/html/config/config.inc.php
   chmod a+w /var/www/html/hackable/uploads/ \
