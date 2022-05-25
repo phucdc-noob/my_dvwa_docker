@@ -39,7 +39,7 @@ config() {
     DELETE FROM mysql.global_priv WHERE User='';
     DELETE FROM mysql.global_priv WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
     DROP DATABASE IF EXISTS test;
-    DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%'
+    DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';
     FLUSH PRIVILEGES;
 _EOF_
   echo "MariaDB's root password is 'toor'"
