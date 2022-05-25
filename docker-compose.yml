@@ -1,0 +1,39 @@
+---
+version: "3.9"
+
+services:
+
+  dvwa_web:
+    container_name: '${APP_NAME}-web'
+    image: php:8.1-apache
+    build:
+      dockerfile: Dockerfile
+    networks: 
+      - dvwa_net
+    depends_on:
+      - dvwa_db
+    ports:
+      - '${APP_PORT}:80'
+    links:
+      - dvwa_db:dvwa_db
+
+  dvwa_db:
+    container_name: '${APP_NAME}-db'
+    image: mariadb:latest
+    volumes:
+      - dvwa_db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASS}'
+      MYSQL_USER: '${MYSQL_USER}'
+      MYSQL_PASSWORD: '${MYSQL_PASS}'
+      MYSQL_DATABASE: '${MYSQL_DB}'
+    networks:
+      - dvwa_net
+    ports:
+      - '${DB_PORT}:3306'
+
+volumes:
+  dvwa_db_data:
+
+networks:
+  dvwa_net:
