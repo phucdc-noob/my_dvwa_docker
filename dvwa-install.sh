@@ -5,6 +5,9 @@ RED_BHI="\e[1;91m"
 GREEN_BHI="\e[1;92m"
 YELLOW_BHI="\e[1;93m"
 
+# normal blue
+BLUE_CRE="\e[0;34m"
+
 # escape ANSI code
 ESC="\e[0m"
 
@@ -94,8 +97,8 @@ setup() {
   requirements &&
   config &&
   dvwa &&
-  printout "${GREEN_BHI}Done! Now you can go to http://localhost/ (Ctrl + Click to open) to access to DVWA with credential: admin/password\n"
-  printout "Your default MariaDB's root password is 'toor'.${ESC}\n"
+  printout "Done! Now you can go to ${BLUE_CRE}http://localhost/${ESC} (Ctrl + Click to open) to access to DVWA with credential: ${BLUE_CRE}admin${ESC}:${BLUE_CRE}password${ESC}\n"
+  printout "Your default MariaDB's root password is '${BLUE_CRE}toor${ESC}'.\n"
 }
 
 setup 2>dvwa_error_log.log && exit 0
