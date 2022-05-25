@@ -14,7 +14,7 @@ ERR="${RED_BHI}\tFailed!${ESC}\n=============================================\n"
 
 # print output
 printout() {
-  printf "$@" 1>&2
+  printf "$@"
 }
 
 # check if script running on root privileges or not
@@ -42,13 +42,13 @@ check_net() {
 # install requirements
 requirements() {
   printout "${YELLOW_BHI}- Installing requirements:"
-  apt-get update -y && apt-get install -y php \
+  apt-get update -y >/dev/null && apt-get install -y php \
     mariadb-server \
     git \
     apache2 \
     php-mysqli \
     php-gd \
-    libapache2-mod-php &&
+    libapache2-mod-php >/dev/null
     printout "${SUCC}"
 }
 
@@ -59,7 +59,7 @@ config() {
   sed -i 's,allow_url_include = Off,allow_url_include = On,g' $PHP_INI
   printout "${SUCC}"
   printout "${YELLOW_BHI}- Configuring MariaDB:"
-  systemctl enable --now mariadb apache2
+  systemctl enable --now mariadb apache2 >/dev/null
   mysql -u root <<_EOF_
     UPDATE mysql.global_priv SET priv=json_set(priv, '$.plugin', 'mysql_native_password', '$.authentication_string', PASSWORD('toor')) WHERE User='root';
     DELETE FROM mysql.global_priv WHERE User='';
@@ -81,7 +81,7 @@ dvwa() {
     flush privileges;
 _EOF_
   rm -rf /var/www/html && mkdir /var/www/html
-  git clone https://github.com/digininja/DVWA.git /var/www/html
+  git clone https://github.com/digininja/DVWA.git /var/www/html >/dev/null
   mv /var/www/html/config/config.inc.php.dist /var/www/html/config/config.inc.php
   chmod a+w /var/www/html/hackable/uploads/ \
     /var/www/html/external/phpids/0.6/lib/IDS/tmp/phpids_log.txt
@@ -95,8 +95,8 @@ setup() {
   config &&
   dvwa &&
   printout "${GREEN_BHI}Done! Now you can go to http://localhost/ (Ctrl + Click to open) to access to DVWA with credential: admin/password\n"
-  printout "Your default MariaDB's root password is 'toor'.${ESC}"
+  printout "Your default MariaDB's root password is 'toor'.${ESC}\n"
 }
 
-setup >/dev/null && exit 0
+setup 2>dvwa_error_log.log && exit 0
 exit 1
